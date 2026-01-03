@@ -3,7 +3,6 @@ call plug#begin('~/.vim/plugged')
 "{{ The Basics }}
     Plug 'gmarik/Vundle.vim'                           " Vundle
     Plug 'itchyny/lightline.vim'                       " Lightline statusbar
-    Plug 'suan/vim-instant-markdown', {'rtp': 'after'} " Markdown Preview
     Plug 'frazrepo/vim-rainbow'
 "{{ File management }}
     Plug 'vifm/vifm.vim'                               " Vifm
@@ -30,12 +29,12 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf', {'do': { -> fzf#install()}}
     Plug 'junegunn/fzf.vim'
     Plug 'stephpy/vim-yaml'
-    Plug 'rhysd/vim-notes-cli'
     Plug 'github/copilot.vim', {'branch': 'release'}
     Plug 'rust-lang/rust.vim'
     Plug 'pearofducks/ansible-vim'
     Plug 'hashivim/vim-terraform'
     Plug 'https://github.com/mattn/vim-chatgpt.git'
+    Plug 'terryma/vim-multiple-cursors'
     "
     " " If you want :UltiSnipsEdit to split your window.
 call plug#end()
@@ -52,7 +51,6 @@ let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let g:NERDTreeWinSize=38
-
 
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
@@ -82,9 +80,25 @@ set list
 
 autocmd BufWritePost *.tf :silent !terraform fmt %
 autocmd BufWritePost *.tfvars :silent !terraform fmt %
+autocmd BufWritePost *.go :silent !gofmt -w %
 
 let g:copilot_filetypes = {'markdown': v:true}
 let g:copilot_filetypes = {'yaml': v:true}
+
+filetype plugin on
+"Uncomment to override defaults:
+"let g:instant_markdown_slow = 1
+"let g:instant_markdown_autostart = 0
+"let g:instant_markdown_open_to_the_world = 1
+"let g:instant_markdown_allow_unsafe_content = 1
+"let g:instant_markdown_allow_external_content = 0
+"let g:instant_markdown_mathjax = 1
+"let g:instant_markdown_mermaid = 1
+"let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
+"let g:instant_markdown_autoscroll = 0
+"let g:instant_markdown_port = 8888
+"let g:instant_markdown_python = 1
+"let g:instant_markdown_theme = 'dark'
 
 " Configuración de ChatGPT (clave de API y modelo)
 so ~/.vim/chatgpt.vim
