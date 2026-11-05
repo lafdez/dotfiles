@@ -27,24 +27,25 @@ call plug#begin('~/.vim/plugged')
     Plug 'morhetz/gruvbox'
     Plug 'neoclide/coc.nvim', {'branch': 'release'}
     Plug 'junegunn/fzf', {'do': { -> fzf#install()}}
-    Plug 'junegunn/fzf.vim'
     Plug 'stephpy/vim-yaml'
-    Plug 'github/copilot.vim', {'branch': 'release'}
     Plug 'rust-lang/rust.vim'
     Plug 'pearofducks/ansible-vim'
     Plug 'hashivim/vim-terraform'
-    Plug 'https://github.com/mattn/vim-chatgpt.git'
     Plug 'terryma/vim-multiple-cursors'
+    Plug 'kdheepak/lazygit.nvim'
     "
     " " If you want :UltiSnipsEdit to split your window.
 call plug#end()
+
+
+let mapleader = " "
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NERDTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Uncomment to autostart the NERDTree
 " autocmd vimenter * NERDTree
-map <C-n> :NERDTreeToggle<CR>
+map <C-t> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '►'
 let g:NERDTreeDirArrowCollapsible = '▼'
 let NERDTreeShowLineNumbers=1
@@ -55,6 +56,9 @@ let g:NERDTreeWinSize=38
 nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gr <Plug>(coc-references)
 nnoremap <C-p> :GFiles<CR>
+
+" setup mapping to call :LazyGit
+nnoremap <silent> <leader>gg :LazyGit<CR>
 
 map <C-Right> <C-w><Right>
 map <C-Left> <C-w><Left>
@@ -82,9 +86,6 @@ autocmd BufWritePost *.tf :silent !terraform fmt %
 autocmd BufWritePost *.tfvars :silent !terraform fmt %
 autocmd BufWritePost *.go :silent !gofmt -w %
 
-let g:copilot_filetypes = {'markdown': v:true}
-let g:copilot_filetypes = {'yaml': v:true}
-
 filetype plugin on
 "Uncomment to override defaults:
 "let g:instant_markdown_slow = 1
@@ -99,8 +100,9 @@ filetype plugin on
 "let g:instant_markdown_port = 8888
 "let g:instant_markdown_python = 1
 "let g:instant_markdown_theme = 'dark'
-
-" Configuración de ChatGPT (clave de API y modelo)
-so ~/.vim/chatgpt.vim
+"
+let g:coc_filetype_map = {
+  \ 'yaml.ansible': 'ansible',
+  \ }
 
 colorscheme jellybeans
